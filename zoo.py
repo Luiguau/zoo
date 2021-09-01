@@ -30,6 +30,7 @@
 # zoo1.add_tiger("Rajah")
 # zoo1.add_tiger("Shere Khan")
 # zoo1.print_all_info()
+# BONUS: Debe crear una forma interactiva (while True ;)) oara poder ir creando animales e ir agregándolos al ZOO.
 
 class Animals:
 	def __init__(self, name, age, healt, happyness):
@@ -39,46 +40,76 @@ class Animals:
 		self.happyness = happyness
 	def display_info(self):
 		print("-"*5, type(self).__name__, "-"*5)
-		print(f"Nombre: {self.name}, \nEdad: {self.age}, \nSalud: {self.healt}, \nFelicidad: {self.happyness}")
+		print(f"Nombre: {self.name} \nEdad: {self.age} \nSalud: {self.healt} \nFelicidad: {self.happyness}")
+	def eat(self):
+		self.healt += 10
+		self.happyness += 10
 
 class Bear(Animals):
-	def __init__(self, name, age=12, healt=50, happyness=40, weight=300, hibernating=False):
+	def __init__(self, name, age=12, healt=50, happyness=40, weight=300, hibernating="No"):
 		super().__init__(name, age, healt, happyness)
 		self.weight=weight
 		self.hibernating = hibernating
+	def eat(self):
+		super().healt += 15
+		super().happyness += 15
+	def display_info(self):
+		super().display_info()
+		print(f"Peso: {self.weight} \nHibernando: {self.hibernating}\n")
+
 
 class Tiger(Animals):
 	def __init__(self, name, age=12, healt=45, happyness=45, fur="Anaranjado"):
 		super().__init__(name, age, healt, happyness)
 		self.fur= fur
+	def eat(self):
+		super().healt += 15
+		super().happyness += 20
+	def display_info(self):
+		super().display_info()
+		print(f"Pelaje: {self.fur}\n")
 
 class Wolf(Animals):
-	def __init__(self, name, age=12, healt=55, happyness=60, typeof="lupus"):
+	def __init__(self, name, age=12, healt=55, happyness=60, typeof="Lupus"):
 		super().__init__(name, age, healt, happyness)
 		self.typeof = typeof
-
+	def eat(self):
+		super().healt += 20
+		super().happyness += 20
+	def display_info(self):
+		super().display_info()
+		print(f"Tipo: {self.typeof}\n") 
 
 class Zoo:
 	def __init__(self, zoo_name):
 		self.animals = []
 		self.name = zoo_name
-	def add_bear(self, name):
-		self.animals.append( Bear(name) )
-	def add_tiger(self, name):
-		self.animals.append( Tiger(name) )
-	def add_wolf(self, name):
-		self.animals.append( Wolf(name) )
 	def print_all_info(self):
 		print("-"*30, self.name, "-"*30)
 		for animal in self.animals:
 			animal.display_info()
+	def add_animals(self):
+		while True:
+			print(f"\n" + "-"*90 + "\n Ingrese el tipo de animal (Oso, Tigre, Lobo) junto con su nombre, ejemplo Oso Baloo")
+			a = input(": ")
+			a = a.split(" ")
+			if a[0].lower() == "oso":
+				self.animals.append(Bear(a[1]))
+				print (f"{a[1]} ha sido agregado correctamente al zoo ")
+			elif a[0].lower() == "tigre":
+				self.animals.append(Tiger(a[1]))
+				print (f"{a[1]} ha sido agregado correctamente al zoo ")
+			elif a[0].lower() == "lobo":
+				self.animals.append(Wolf(a[1]))
+				print (f"{a[1]} ha sido agregado correctamente al zoo ")
+			else :
+				print(f"Error de ingreso, {a} \n")
+			c= input("Desea ingresar otro animal (S/N):")
+			if c.upper() == "N":
+				break
 
 
-zoo1 = Zoo("John's Zoo")
-zoo1.add_bear("Baloo")
-zoo1.add_bear("Bubu")
-zoo1.add_tiger("Rajah")
-zoo1.add_tiger("Shere Khan")
-zoo1.add_wolf("Warwick")
-zoo1.add_wolf("Law")
+
+zoo1 = Zoo("Pepe's Zoo")
+zoo1.add_animals()
 zoo1.print_all_info()
